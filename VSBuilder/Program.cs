@@ -1,4 +1,25 @@
 ﻿
+using NLua;
 using VSBuilder.Module;
+using VSBuilder.Module.lua_functions;
 
-new LuaStartup();
+
+_File _File = new _File();
+_object _Object = new _object();
+using (Lua lua = new Lua())
+{
+    lua.RegFunction("ReadFile", _File);
+    lua.RegFunction("ToJson", _Object);
+    lua.RegFunction("ToJsonObject", _Object);
+    foreach (var item in Directory.GetFiles("Test", "*.lua"))
+    {
+        var v = lua.DoFile(item);
+
+        Console.WriteLine(string.Join(" ", v));
+    }
+}
+Console.ReadLine();
+
+
+
+
